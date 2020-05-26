@@ -1,0 +1,6 @@
+
+
+
+
+# Initialize wights and biases
+

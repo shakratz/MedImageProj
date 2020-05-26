@@ -1,19 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f6b2d402-96b9-419a-8955-5a257aa54c7c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms_classification_project.zip" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1cRf3D1uctCnf9bTvI6ZTwNIRmN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f6b2d402-96b9-419a-8955-5a257aa54c7c" name="Default Changelist" comment="" />
+      <created>1590496124889</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590496124889</updated>
+    </task>
+    <task id="LOCAL‎00001" summary="initial commit 2">
+      <created>1590496343351</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1590496343352</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="initial commit 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit 2" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="805" y="299" key="FileChooserDialogImpl" timestamp="1590496230919">
+    <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590496489919">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="805" y="299" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496230919" />
+    <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496489919" />
+    <state x="680" y="152" key="CommitChangelistDialog2" timestamp="1590496871839">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="680" y="152" key="CommitChangelistDialog2/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496871839" />
+    <state x="805" y="299" key="FileChooserDialogImpl" timestamp="1590496489355">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="805" y="299" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496489355" />
     <state x="884" y="451" key="Github.ShareDialog" timestamp="1590496289743">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -26,6 +88,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="533" y="200" key="SettingsEditor/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496219573" />
+    <state x="617" y="290" key="Vcs.Push.Dialog.v2" timestamp="1590496943981">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="617" y="290" key="Vcs.Push.Dialog.v2/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496943981" />
     <state x="687" y="243" width="672" height="678" key="search.everywhere.popup" timestamp="1590496241840">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
