@@ -13,65 +13,70 @@ std = 1
 patch_size = 32
 mini_batch_size = 5
 epochs = 100
-mini_batches = epochs//mini_batch_size
-num_of_neurons = patch_size*patch_size
+mini_batches = epochs // mini_batch_size
+num_of_neurons = patch_size * patch_size
+num_of_weights = 10
 pixel_max_value = 255
 
 # Initialize wights and biases
 
-Weights = np.random.normal(mean, std, num_of_neurons).reshape(-1, 1)
-Biases = np.random.normal(mean, std, num_of_neurons)
+W1 = np.random.normal(mean, std, (num_of_neurons,num_of_weights))
+W2 = np.random.normal(mean, std, (num_of_weights,1))
+Biases = np.random.normal(mean, std, (num_of_weights,1))
 Bias = np.random.normal(mean, std)
 
 # loading the training set
-imList=glob.glob(TRAINING_PATH+'*.png')
+imList = glob.glob(TRAINING_PATH + '*.png')
 training_set_arr = []
 for img in imList:
     im = Image.open(img)
     filepath, filenameExt = os.path.split(img)
     filename, fileExt = os.path.splitext(filenameExt)
     file_label = filename.split("_")[0]
-    if file_label=='pos':
-        label=1
+    if file_label == 'pos':
+        label = 1
     else:
-        label=0
-    training_set_arr.append((im,label))
+        label = 0
+    training_set_arr.append((im, label))
 
 # loading the validation set
-imList=glob.glob(VALIDATION_PATH+'*.png')
+imList = glob.glob(VALIDATION_PATH + '*.png')
 validation_set_arr = []
 for img in imList:
     im = Image.open(img)
     filepath, filenameExt = os.path.split(img)
     filename, fileExt = os.path.splitext(filenameExt)
     file_label = filename.split("_")[0]
-    if file_label=='pos':
-        label=1
+    if file_label == 'pos':
+        label = 1
     else:
-        label=0
-    validation_set_arr.append((im,label))
+        label = 0
+    validation_set_arr.append((im, label))
 
 for epoch in range(epochs):
     # Shuffeling the set so every epoch will use different mini batches
     shuffle(training_set_arr)
     for mini_batch in range(mini_batches):
         # 1. Sample a random mini-batch
-        current_batch = training_set_arr[(mini_batch)*mini_batch_size:(mini_batch+1)*mini_batch_size]
+        current_batch = training_set_arr[(mini_batch) * mini_batch_size:(mini_batch + 1) * mini_batch_size]
 
         # 2. Forward propagation of input vectors through the network
         for i in range(len(current_batch)):
             # prepare input vector and label
-            sample = current_batch[i][0]    # Get image
-            sample_array = np.array(sample)/np.sum(sample)  # convert to array & normalize
-            sample_vector = (sample_array.flatten()).reshape(-1, 1).T   # reshape to 1*1024
-            label = current_batch[i][1]     # get label
+            sample = current_batch[i][0]  # Get image
+            sample_array = np.array(sample) / np.sum(sample)  # convert to array & normalize
+            sample_vector = (sample_array.flatten()).reshape(-1, 1).T  # reshape to 1*1024
+            label = current_batch[i][1]  # get label
 
-            # Forward propagation - W and B
-            W_multiplied = np.dot(sample_vector,Weights)[0]     # X*W
-            z = (W_multiplied[0] + Bias)    # X*W + b
+            # Forward propagation - hidden layer W and B
+            W_multiplied = np.dot(sample_vector, W1)[0]  # X*W1     dims are (1,1024)*(1024,10)
+            z = (W_multiplied[0] + Biases)  # X*W1 + b  # output dmin is (10,1)
 
             # Activation function - RelU
-            h = max(z, 0, z)    # f(X*W+b)
+            h = np.maximum(z, 0, z)  # f(X*W+b)
+
+            # Output
+            output = np.dot(h.T, W2)[0]     # dims are (1,10)*(10,1)
 
             # and cache forward pass variables
             # sigmoid(pixel*W + B)
@@ -79,13 +84,13 @@ for epoch in range(epochs):
             # 3. Compute MSE and accuracy
             # accuracy = []
             # loss = []
-            #for each sample in minibatch:
-                # loss[i] = ((A-B)**2).mean(axis=None)
-                #accuracy:
-                #if label == np.round(output):
-                    #accuracy[sample] = 1
-                #else:
-                    #accuracy[sample] = 0
+            # for each sample in minibatch:
+            # loss[i] = ((A-B)**2).mean(axis=None)
+            # accuracy:
+            # if label == np.round(output):
+            # accuracy[sample] = 1
+            # else:
+            # accuracy[sample] = 0
             # avg_loss = np.average(loss)
             # avg_accuracy = np.average(accuracy)
             # 4. Compute gradients of the training loss
