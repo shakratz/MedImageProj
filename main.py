@@ -20,11 +20,10 @@ pixel_max_value = 255
 
 # Initialize wights and biases
 
-W1 = np.random.normal(mean, std, (num_of_neurons,num_of_weights))
-W2 = np.random.normal(mean, std, (num_of_weights,1))
-B1 = np.random.normal(mean, std, (num_of_weights,1))
+W1 = np.random.normal(mean, std, (num_of_weights, num_of_neurons))  # (10, 1024)_
+W2 = np.random.normal(mean, std, (1, num_of_weights))  # (1,10)
+B1 = np.random.normal(mean, std, (num_of_weights, 1))
 B2 = np.random.normal(mean, std)
-
 
 # loading the training set
 imList = glob.glob(TRAINING_PATH + '*.png')
@@ -66,19 +65,19 @@ for epoch in range(epochs):
             # prepare input vector and label
             sample = current_batch[i][0]  # Get image
             sample_array = np.array(sample) / np.sum(sample)  # convert to array & normalize
-            sample_vector = (sample_array.flatten()).reshape(-1, 1).T  # reshape to 1*1024
+            sample_vector = (sample_array.flatten()).reshape(-1, 1)  # reshape to 1*1024
             label = current_batch[i][1]  # get label
 
             # Forward propagation - hidden layer W and B
-            W_multiplied = np.dot(sample_vector, W1)[0]  # X*W1     dims are (1,1024)*(1024,10)
-            z1 = (W_multiplied[0] + B1)  # X*W1 + B1  # output dmin is (10,1)
-            h1 = np.maximum(z1, 0, z1)  # f(X*W+b) with RelU # output dmin is (10,1)
+            W1_multiplied = np.dot(W1, sample_vector) # W1*X     dims are (1,1024)*(1024,10)
+            z1 = (W1_multiplied[0] + B1)  # W1*X + B1  # output dmin is (10,1)
+            h1 = np.maximum(z1, 0, z1)  # f(W1*X+b) with RelU # output dmin is (10,1)
 
             # Output
-            W_multiplied = np.dot(h1.T, W2)[0]    # X*W2 # dims are (1,10)*(10,1)
-            z2 = (W_multiplied[0] + B2)  # X*W2 + B2  # output dmin is a single output
-            h2 = max(z2, 0, z2)  # f(X*W+b) with RelU
-
+            W2_multiplied = np.dot(W2, h1)[0]  # W2*h1 # dims are (1,10)*(10,1)
+            z2 = (W2_multiplied[0] + B2)  # W2*h1 + B2  # output is a single output
+            h2 = max(z2, 0, z2)  # f(W2*h1+b) with RelU
+            output = min(1, h2)   # limit output to 1
             # 3. Compute MSE and accuracy
             # accuracy = []
             # loss = []
