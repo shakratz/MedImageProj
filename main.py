@@ -22,8 +22,9 @@ pixel_max_value = 255
 
 W1 = np.random.normal(mean, std, (num_of_neurons,num_of_weights))
 W2 = np.random.normal(mean, std, (num_of_weights,1))
-Biases = np.random.normal(mean, std, (num_of_weights,1))
-Bias = np.random.normal(mean, std)
+B1 = np.random.normal(mean, std, (num_of_weights,1))
+B2 = np.random.normal(mean, std)
+
 
 # loading the training set
 imList = glob.glob(TRAINING_PATH + '*.png')
@@ -70,16 +71,13 @@ for epoch in range(epochs):
 
             # Forward propagation - hidden layer W and B
             W_multiplied = np.dot(sample_vector, W1)[0]  # X*W1     dims are (1,1024)*(1024,10)
-            z = (W_multiplied[0] + Biases)  # X*W1 + b  # output dmin is (10,1)
-
-            # Activation function - RelU
-            h = np.maximum(z, 0, z)  # f(X*W+b)
+            z1 = (W_multiplied[0] + B1)  # X*W1 + B1  # output dmin is (10,1)
+            h1 = np.maximum(z1, 0, z1)  # f(X*W+b) with RelU # output dmin is (10,1)
 
             # Output
-            output = np.dot(h.T, W2)[0]     # dims are (1,10)*(10,1)
-
-            # and cache forward pass variables
-            # sigmoid(pixel*W + B)
+            W_multiplied = np.dot(h1.T, W2)[0]    # X*W2 # dims are (1,10)*(10,1)
+            z2 = (W_multiplied[0] + B2)  # X*W2 + B2  # output dmin is a single output
+            h2 = max(z2, 0, z2)  # f(X*W+b) with RelU
 
             # 3. Compute MSE and accuracy
             # accuracy = []
