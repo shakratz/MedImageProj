@@ -7,6 +7,13 @@ from random import shuffle
 TRAINING_PATH = 'training\\'
 VALIDATION_PATH = 'validation\\'
 
+
+def actv_func_deriv(x):
+    x[x <= 0] = 0
+    x[x > 0] = 1
+    return x
+
+
 # Hyper Parameters
 mean = 0
 std = 1
@@ -60,6 +67,9 @@ for epoch in range(epochs):
         # 1. Sample a random mini-batch
         current_batch = training_set_arr[(mini_batch) * mini_batch_size:(mini_batch + 1) * mini_batch_size]
 
+        accuracy = np.zeros(mini_batch_size)
+        loss = np.zeros(mini_batch_size)
+        z_L = np.zeros(mini_batch_size)
         # 2. Forward propagation of input vectors through the network
         for i in range(len(current_batch)):
             # prepare input vector and label
@@ -69,7 +79,7 @@ for epoch in range(epochs):
             label = current_batch[i][1]  # get label
 
             # Forward propagation - hidden layer W and B
-            W1_multiplied = np.dot(W1, sample_vector) # W1*X     dims are (1,1024)*(1024,10)
+            W1_multiplied = np.dot(W1, sample_vector)  # W1*X     dims are (1,1024)*(1024,10)
             z1 = (W1_multiplied[0] + B1)  # W1*X + B1  # output dmin is (10,1)
             h1 = np.maximum(z1, 0, z1)  # f(W1*X+b) with RelU # output dmin is (10,1)
 
@@ -77,26 +87,33 @@ for epoch in range(epochs):
             W2_multiplied = np.dot(W2, h1)[0]  # W2*h1 # dims are (1,10)*(10,1)
             z2 = (W2_multiplied[0] + B2)  # W2*h1 + B2  # output is a single output
             h2 = max(z2, 0, z2)  # f(W2*h1+b) with RelU
-            output = min(1, h2)   # limit output to 1
+            output = min(1, h2)  # limit output to 1
+            z_L[i] = z2
             # 3. Compute MSE and accuracy
-            # accuracy = []
-            # loss = []
-            # for each sample in minibatch:
-            # loss[i] = ((A-B)**2).mean(axis=None)
+            loss[i] = (output - label) ** 2
             # accuracy:
-            # if label == np.round(output):
-            # accuracy[sample] = 1
-            # else:
-            # accuracy[sample] = 0
-            # avg_loss = np.average(loss)
-            # avg_accuracy = np.average(accuracy)
-            # 4. Compute gradients of the training loss
-            # using back propagation equations
+            if label == np.round(output):
+                accuracy[i] = 1
+            else:
+                accuracy[i] = 0
 
-            # 5. Update weights and biases using calculated gradients and step size
+        # Calculate average loss and accuracy
+        avg_loss = np.average(loss)
+        avg_accuracy = np.average(accuracy)
 
-            # 6. Forward propagate the validation examples,
-            # and compute loss and accuracy for them (decide if to stop the training)
+        # 4. Compute gradients of the training loss
+        # using back propagation equations
+        delta_C = 2 * avg_loss
+        sigma_tag = np.mean(actv_func_deriv(z_L))
+        delta_L = delta_C * sigma_tag
+
+        delta_l = 1
+        gradient_b = 1
+        gradient_w = 1
+        # 5. Update weights and biases using calculated gradients and step size
+
+        # 6. Forward propagate the validation examples,
+        # and compute loss and accuracy for them (decide if to stop the training)
 
 # Visualize a learning curve for training set and validation set:
 # Plot of loss and accuracy as a function of epochs
