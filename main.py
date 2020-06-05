@@ -16,7 +16,7 @@ def actv_func_deriv(x):
 
 
 # Hyper Parameters
-learning_rate = 2
+learning_rate = 5
 mean = 0
 std = 1
 patch_size = 32
@@ -69,6 +69,7 @@ mini_batch_results_training = np.zeros((mini_batches_training, 2))
 mini_batch_results_validation = np.zeros((mini_batches_validation, 2))
 total_results_training = np.zeros((epochs, 2))
 total_results_validation = np.zeros((epochs, 2))
+
 for epoch in range(epochs):
     # Shuffeling the set so every epoch will use different mini batches
     shuffle(training_set_arr)
@@ -87,20 +88,21 @@ for epoch in range(epochs):
         for i in range(len(current_batch)):
             # prepare input vector and label
             sample = current_batch[i][0]  # Get image
-            sample_array = np.array(sample) / np.sum(sample)  # convert to array & normalize
+            sample_array = np.array(sample) / 255  # convert to array & normalize
             sample_vector = (sample_array.flatten()).reshape(-1, 1)  # reshape to 1*1024
             label = current_batch[i][1]  # get label
-            pixels[:, i] = sample_vector[:, 0]
+            pixels[:, i] = sample_vector[:, 0] # save pixels for backward propogation
+
             # Forward propagation - hidden layer W and B
-            W1_multiplied = np.dot(W1, sample_vector)  # W1*X     dims are (1,1024)*(1024,10)
+            W1_multiplied = np.dot(W1, sample_vector)  # W1*X     dims are (10,1024)*(1024,1)= (10,1)
             z1 = (W1_multiplied[0] + B1)  # W1*X + B1  # output dmin is (10,1)
             h1 = np.maximum(z1, 0, z1)  # f(W1*X+b) with RelU # output dmin is (10,1)
-            z_1[:, i] = z1[:, 0]
-            h_1[:, i] = h1[:, 0]
+            z_1[:, i] = z1[:, 0]    # store values for backward propogation
+            h_1[:, i] = h1[:, 0]    # store values for backward propogation
             # Output
             W2_multiplied = np.dot(W2, h1)[0]  # W2*h1 # dims are (1,10)*(10,1)
             z2 = (W2_multiplied[0] + B2)  # W2*h1 + B2  # output is a single output
-            h2 = max(z2, 0, z2)  # f(W2*h1+b) with RelU
+            h2 = max(z2, 0)  # f(W2*h1+b) with RelU
             output = min(1, h2)  # limit output to 1
             z_L[i] = z2
             # 3. Compute MSE and accuracy
@@ -139,10 +141,10 @@ for epoch in range(epochs):
         # delta_l_0 = np.dot(W1.T, delta_l_1) * actv_func_deriv(pixels)  # size: (1024,5) **pixels are z0?**
 
         # 5. Update weights and biases using calculated gradients and step size
-        W1 = W1 + learning_rate * gradient_w_1  # (10, 1024)
-        W2 = W2 + learning_rate * gradient_w_2  # (1,10)
-        B1 = B1 + learning_rate * gradient_b_1  # (10, 1)
-        B2 = B2 + learning_rate * gradient_b_2
+        W1 = W1 - learning_rate * gradient_w_1  # (10, 1024)
+        W2 = W2 - learning_rate * gradient_w_2  # (1,10)
+        B1 = B1 - learning_rate * gradient_b_1  # (10, 1)
+        B2 = B2 - learning_rate * gradient_b_2
 
     total_results_training[epoch, 0] = np.mean(mini_batch_results_training[:, 0])
     total_results_training[epoch, 1] = np.mean(mini_batch_results_training[:, 1])
@@ -162,7 +164,7 @@ for epoch in range(epochs):
         for i in range(len(current_batch)):
             # prepare input vector and label
             sample = current_batch[i][0]  # Get image
-            sample_array = np.array(sample) / np.sum(sample)  # convert to array & normalize
+            sample_array = np.array(sample) / 255  # convert to array & normalize
             sample_vector = (sample_array.flatten()).reshape(-1, 1)  # reshape to 1*1024
             label = current_batch[i][1]  # get label
 
