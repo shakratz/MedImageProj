@@ -9,11 +9,11 @@ TRAINING_PATH = 'training\\'
 VALIDATION_PATH = 'validation\\'
 
 
-def init_params(layer_dims, mean = 0 ,std = 1): #layer_dims = [1024,10,1]
+def init_params(layer_dims, mean=0, std=1):  # layer_dims = [1024,10,1]
     params = {}
     L = len(layer_dims)
     for l in range(1, L):
-        params['W' + str(l)] = np.random.normal(mean, std, (layer_dims[l], layer_dims[l-1]))
+        params['W' + str(l)] = np.random.normal(mean, std, (layer_dims[l], layer_dims[l - 1]))
         params['b' + str(l)] = np.random.normal(mean, std, (layer_dims[l], 1))
     return params
 
@@ -23,10 +23,12 @@ def sigmoid(Z):
     cache = (Z)
     return A, cache
 
+
 def reLU(Z):
-    A = max(Z.any(),0)
+    A = max(Z.any(), 0)
     cache = (Z)
     return A, cache
+
 
 def BackPropagation(avg_loss, caches):
     grads = {}
@@ -37,7 +39,7 @@ def BackPropagation(avg_loss, caches):
     grads['b' + str(2)] = delta_L  # size:(1,1)
 
     a_k_1 = (h_1.mean(axis=1)).reshape(1, -1)
-    grads['W' + str(2)] = np.dot(a_k_1, delta_L)  # size:(1,10) as W2 size
+    grads['W' + str(2)] = np.dot(a_k_1.T, delta_L)  # size:(1,10) as W2 size
 
     delta_l_1 = np.dot(W2.T, delta_L) * actv_func_deriv(z_1.mean(axis=1)).reshape(-1, 1)  # size: (10,1)
 
@@ -47,6 +49,7 @@ def BackPropagation(avg_loss, caches):
     grads['W' + str(1)] = np.dot(a_k_1, delta_l_1.T).T  # size :(10, 1024)
 
     return grads
+
 
 def backprop(AL, Y, caches):
     grads = {}
@@ -68,6 +71,7 @@ def backprop(AL, Y, caches):
         grads["db" + str(l + 1)] = db_temp
 
     return grads
+
 
 def ForwardPropagation(X, params):
     A = X  # input to first layer i.e. training data
@@ -96,7 +100,7 @@ def one_layer_backward(dA, cache):
     linear_cache, activation_cache = cache
 
     Z = activation_cache
-    dZ = dA * sigmoid(Z) * (1 - sigmoid(Z))  # Derivative of the sigmoid function
+    dZ = dA * sigmoid(Z)[0] * (1 - sigmoid(Z)[0])  # Derivative of the sigmoid function
 
     A_prev, W, b = linear_cache
     m = A_prev.shape[1]
@@ -106,6 +110,7 @@ def one_layer_backward(dA, cache):
     dA_prev = np.dot(W.T, dZ)
 
     return dA_prev, dW, db
+
 
 def LoadSet(path):
     imList = glob.glob(path + '*.png')
@@ -132,10 +137,12 @@ def update_parameters(parameters, grads, learning_rate):
 
     return parameters
 
+
 def actv_func_deriv(x):
     x[x <= 0] = 0
     x[x > 0] = 1
     return x
+
 
 def PlotResult(epochs, total_results, method):
     plt.figure()
@@ -143,7 +150,7 @@ def PlotResult(epochs, total_results, method):
     plt.plot(range(epochs), total_results[:, 0], linewidth=2.0)
     plt.xlabel('Epochs')
     plt.ylabel('Average loss')
-    plt.title(method + ' loss')
+    plt.title(method + ' Average loss')
     axes = plt.gca()
     axes.set_ylim([0, 1])
 
@@ -151,14 +158,14 @@ def PlotResult(epochs, total_results, method):
     plt.plot(range(epochs), total_results[:, 1], linewidth=2.0)
     plt.xlabel('Epochs')
     plt.ylabel('Average accuracy')
-    plt.title('Validation accuracy')
+    plt.title(method + ' Average accuracy')
     axes = plt.gca()
     axes.set_ylim([0, 1])
     plt.show()
 
 
 # Hyper Parameters
-learning_rate = 2
+learning_rate = 0.1
 mean = 0
 std = 1
 patch_size = 32
@@ -177,12 +184,13 @@ W2 = np.random.normal(mean, std, (1, num_of_weights_W1))  # (1,10)
 B1 = np.random.normal(mean, std, (num_of_weights_W1, 1))  # (10,1)
 B2 = np.random.normal(mean, std)
 
+params = init_params(layer_dims)
+
 # loading the training set
 training_set_arr = LoadSet(TRAINING_PATH)
 
 # loading the validation set
 validation_set_arr = LoadSet(VALIDATION_PATH)
-
 
 mini_batches_training = len(training_set_arr) // mini_batch_size
 mini_batches_validation = len(validation_set_arr) // mini_batch_size
@@ -205,20 +213,22 @@ for epoch in range(epochs):
         z_L = np.zeros(mini_batch_size)
         z_1 = np.zeros((num_of_weights_W1, mini_batch_size))
         h_1 = np.zeros((num_of_weights_W1, mini_batch_size))
+        Y = np.zeros((mini_batch_size,1))
+        Y_hat = np.zeros((mini_batch_size,1))
 
         # 2. Forward propagation of input vectors through the network
         for i in range(len(current_batch)):
             # prepare input vector and label
             sample = current_batch[i][0]  # Get image
-            sample_array = np.array(sample, dtype = 'f')/255  # convert to array & normalize
-            sample_vector = (sample_array.flatten('F')).reshape(-1,1)  # reshape to 1*1024
+            sample_array = np.array(sample, dtype='f') / 255  # convert to array & normalize
+            sample_vector = (sample_array.flatten('F')).reshape(-1, 1)  # reshape to 1*1024
             label = current_batch[i][1]  # get label
-            pixels[:, i] = sample_vector[:, 0] # save pixels for backward propogation
+            pixels[:, i] = sample_vector[:, 0]  # save pixels for backward propogation
 
-
-            params = init_params(layer_dims)
             output, caches = ForwardPropagation(sample_vector, params)
-
+            output = output[0,0]
+            Y_hat[i] = output
+            Y[i] = label
             # 3. Compute MSE and accuracy
             loss[i] = (output - label) ** 2
             # accuracy:
@@ -237,14 +247,12 @@ for epoch in range(epochs):
         # 4. Compute gradients of the training loss
         # using back propagation equations
 
-        #Y = []
-        #for i in range(len(current_batch)):
+        # Y = []
+        # for i in range(len(current_batch)):
         #    Y.append(current_batch[i][1])
 
-        grads = BackPropagation(output, caches)
-
-        # delta_l_0 = np.dot(W1.T, delta_l_1) * actv_func_deriv(pixels)  # size: (1024,5) **pixels are z0?**
-
+        #grads = BackPropagation(output, caches)
+        grads = backprop(Y_hat,Y, caches)
         # 5. Update weights and biases using calculated gradients and step size
         update_parameters(params, grads, learning_rate)
 
