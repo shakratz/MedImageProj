@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="269ff07d-b05e-4d14-97c6-087346c08ead" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dims.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/dims.bmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +64,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f6b2d402-96b9-419a-8955-5a257aa54c7c" name="Default Changelist" comment="" />
+      <changelist id="269ff07d-b05e-4d14-97c6-087346c08ead" name="Default Changelist" comment="" />
       <created>1590496124889</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -119,8 +118,24 @@
       <option name="presentableId" value="LOCAL‎00008" />
       <updated>1590745646280</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎00009" summary="Original code">
+      <created>1591521358637</created>
+      <option name="number" value="LOCAL‎00009" />
+      <option name="presentableId" value="LOCAL‎00009" />
+      <updated>1591521358637</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -132,18 +147,23 @@
     <MESSAGE value="fixed dimensions" />
     <MESSAGE value="started back propogation" />
     <MESSAGE value="continued back propogation" />
-    <option name="LAST_COMMIT_MESSAGE" value="continued back propogation" />
+    <MESSAGE value="Original code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Original code" />
   </component>
   <component name="WindowStateProjectService">
     <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590579849025">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="479" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590579849025" />
-    <state x="680" y="152" key="CommitChangelistDialog2" timestamp="1590745645635">
+    <state x="680" y="140" key="CommitChangelistDialog2" timestamp="1591521358014">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="680" y="152" key="CommitChangelistDialog2/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590745645635" />
+    <state x="680" y="140" key="CommitChangelistDialog2/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591521358014" />
     <state x="3198" y="142" key="CommitChangelistDialog2/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590613860609" />
+    <state width="516" height="466" key="DebuggerActiveHint" timestamp="1591708451502">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="516" height="466" key="DebuggerActiveHint/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591708451502" />
     <state x="805" y="299" key="FileChooserDialogImpl" timestamp="1590579848341">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -156,45 +176,45 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="825" y="261" key="Github.UntrackedFilesDialog/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496302846" />
-    <state width="2027" height="304" key="GridCell.Tab.0.bottom" timestamp="1591201565245">
+    <state width="2027" height="377" key="GridCell.Tab.0.bottom" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="304" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201565245" />
+    <state width="2027" height="377" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678743219" />
-    <state width="2027" height="304" key="GridCell.Tab.0.center" timestamp="1591201565245">
+    <state width="2027" height="377" key="GridCell.Tab.0.center" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="304" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201565245" />
+    <state width="2027" height="377" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678743219" />
-    <state width="2027" height="304" key="GridCell.Tab.0.left" timestamp="1591201565245">
+    <state width="2027" height="377" key="GridCell.Tab.0.left" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="304" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201565245" />
+    <state width="2027" height="377" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678743219" />
-    <state width="2027" height="304" key="GridCell.Tab.0.right" timestamp="1591201565245">
+    <state width="2027" height="377" key="GridCell.Tab.0.right" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="304" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201565245" />
+    <state width="2027" height="377" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678743219" />
-    <state width="2027" height="377" key="GridCell.Tab.1.bottom" timestamp="1591201220790">
+    <state width="2027" height="377" key="GridCell.Tab.1.bottom" timestamp="1591712711975">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="377" key="GridCell.Tab.1.bottom/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201220790" />
+    <state width="2027" height="377" key="GridCell.Tab.1.bottom/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711975" />
     <state width="1899" height="346" key="GridCell.Tab.1.bottom/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678744476" />
-    <state width="2027" height="377" key="GridCell.Tab.1.center" timestamp="1591201220790">
+    <state width="2027" height="377" key="GridCell.Tab.1.center" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="377" key="GridCell.Tab.1.center/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201220790" />
+    <state width="2027" height="377" key="GridCell.Tab.1.center/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.1.center/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678744475" />
-    <state width="2027" height="377" key="GridCell.Tab.1.left" timestamp="1591201220790">
+    <state width="2027" height="377" key="GridCell.Tab.1.left" timestamp="1591712711974">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="377" key="GridCell.Tab.1.left/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201220790" />
+    <state width="2027" height="377" key="GridCell.Tab.1.left/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711974" />
     <state width="1899" height="346" key="GridCell.Tab.1.left/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678744475" />
-    <state width="2027" height="377" key="GridCell.Tab.1.right" timestamp="1591201220790">
+    <state width="2027" height="377" key="GridCell.Tab.1.right" timestamp="1591712711975">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2027" height="377" key="GridCell.Tab.1.right/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591201220790" />
+    <state width="2027" height="377" key="GridCell.Tab.1.right/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1591712711975" />
     <state width="1899" height="346" key="GridCell.Tab.1.right/0.0.2048.1112/2560.0.1920.1040@2560.0.1920.1040" timestamp="1590678744476" />
     <state x="533" y="200" key="SettingsEditor" timestamp="1590496992592">
       <screen x="0" y="0" width="2048" height="1112" />
@@ -214,5 +234,16 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="687" y="243" width="672" height="678" key="search.everywhere.popup/0.0.2048.1112/2560.0.1920.1040@0.0.2048.1112" timestamp="1590496241840" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>155</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

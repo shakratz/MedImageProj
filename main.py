@@ -16,22 +16,22 @@ def actv_func_deriv(x):
 
 
 # Hyper Parameters
-learning_rate = 2
+learning_rate = 0.001
 mean = 0
-std = 1
+std = 0.1
 patch_size = 32
 mini_batch_size = 5
 epochs = 100
 num_of_pixels = patch_size * patch_size
-num_of_weights_W1 = 10
+num_of_neurons = 10
 total_weights = 2
 pixel_max_value = 255
 
 # Initialize wights and biases
 
-W1 = np.random.normal(mean, std, (num_of_weights_W1, num_of_pixels))  # (10, 1024)
-W2 = np.random.normal(mean, std, (1, num_of_weights_W1))  # (1,10)
-B1 = np.random.normal(mean, std, (num_of_weights_W1, 1))  # (10,1)
+W1 = np.random.normal(mean, std, (num_of_neurons, num_of_pixels))  # (10, 1024)
+W2 = np.random.normal(mean, std, (1, num_of_neurons))  # (1,10)
+B1 = np.random.normal(mean, std, (num_of_neurons, 1))  # (10,1)
 B2 = np.random.normal(mean, std)
 
 # loading the training set
@@ -80,31 +80,38 @@ for epoch in range(epochs):
         loss = np.zeros(mini_batch_size)
         pixels = np.zeros((num_of_pixels, mini_batch_size))
         z_L = np.zeros(mini_batch_size)
-        z_1 = np.zeros((num_of_weights_W1, mini_batch_size))
-        h_1 = np.zeros((num_of_weights_W1, mini_batch_size))
+        z_1 = np.zeros((num_of_neurons, mini_batch_size))
+        h_1 = np.zeros((num_of_neurons, mini_batch_size))
 
         # 2. Forward propagation of input vectors through the network
         for i in range(len(current_batch)):
             # prepare input vector and label
             sample = current_batch[i][0]  # Get image
-            sample_array = np.array(sample) / np.sum(sample)  # convert to array & normalize
-            sample_vector = (sample_array.flatten()).reshape(-1, 1)  # reshape to 1*1024
+            sample_array = np.array(sample) / pixel_max_value  # convert to array & normalize
+            sample_vector = (sample_array.flatten()).reshape(-1, 1)  # reshape to 1024*1
             label = current_batch[i][1]  # get label
-            pixels[:, i] = sample_vector[:, 0]
+            pixels[:, i] = sample_vector[:, 0]  # store data for back propogation
+
             # Forward propagation - hidden layer W and B
-            W1_multiplied = np.dot(W1, sample_vector)  # W1*X     dims are (1,1024)*(1024,10)
+            W1_multiplied = np.dot(W1, sample_vector)  # W1*X     dims are (10,1024)*(1024,1)
             z1 = (W1_multiplied[0] + B1)  # W1*X + B1  # output dmin is (10,1)
-            h1 = np.maximum(z1, 0, z1)  # f(W1*X+b) with RelU # output dmin is (10,1)
-            z_1[:, i] = z1[:, 0]
-            h_1[:, i] = h1[:, 0]
-            # Output
+            h1 = np.maximum(z1, 0)  # f(W1*X+b) with RelU # output dmin is (10,1)
+
+            z_1[:, i] = z1[:, 0]  # store data for back propogation
+            h_1[:, i] = h1[:, 0]  # store data for back propogation
+
             W2_multiplied = np.dot(W2, h1)[0]  # W2*h1 # dims are (1,10)*(10,1)
             z2 = (W2_multiplied[0] + B2)  # W2*h1 + B2  # output is a single output
-            h2 = max(z2, 0, z2)  # f(W2*h1+b) with RelU
-            output = min(1, h2)  # limit output to 1
-            z_L[i] = z2
+            output = max(z2, 0)  # f(W2*h1+b) with RelU
+
+            # output = min(1, h2)  # limit output to 1
+            z_L[i] = z2  # store data for back propogation
+
             # 3. Compute MSE and accuracy
             loss[i] = (output - label) ** 2
+            #loss[i] = np.power((output - label),2)
+            #loss[i] += learning_rate * np.sum(W1*W1) + np.sum(W2*W2)
+
             # accuracy:
             if label == np.round(output):
                 accuracy[i] = 1
@@ -136,13 +143,14 @@ for epoch in range(epochs):
         a_k_1 = (pixels.mean(axis=1)).reshape(-1, 1)
         gradient_w_1 = np.dot(a_k_1, delta_l_1.T).T  # size :(10, 1024)
 
-        # delta_l_0 = np.dot(W1.T, delta_l_1) * actv_func_deriv(pixels)  # size: (1024,5) **pixels are z0?**
+        gradient_w_1 += learning_rate * 2 * W1
+        gradient_w_2 += learning_rate * 2 * W2
 
         # 5. Update weights and biases using calculated gradients and step size
-        W1 = W1 + learning_rate * gradient_w_1  # (10, 1024)
-        W2 = W2 + learning_rate * gradient_w_2  # (1,10)
-        B1 = B1 + learning_rate * gradient_b_1  # (10, 1)
-        B2 = B2 + learning_rate * gradient_b_2
+        W1 = W1 - learning_rate * gradient_w_1  # (10, 1024)
+        W2 = W2 - learning_rate * gradient_w_2  # (1,10)
+        B1 = B1 - learning_rate * gradient_b_1  # (10, 1)
+        B2 = B2 - learning_rate * gradient_b_2
 
     total_results_training[epoch, 0] = np.mean(mini_batch_results_training[:, 0])
     total_results_training[epoch, 1] = np.mean(mini_batch_results_training[:, 1])
@@ -216,6 +224,7 @@ axes = plt.gca()
 axes.set_ylim([0, 1])
 plt.show()
 
+"""
 ######### PLOTTING VALIDATION RESULTS #########
 plt.figure()
 plt.subplot(211)
@@ -234,3 +243,4 @@ plt.title('Validation accuracy')
 axes = plt.gca()
 axes.set_ylim([0, 1])
 plt.show()
+"""
