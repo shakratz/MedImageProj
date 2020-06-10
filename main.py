@@ -40,9 +40,9 @@ std = 0.01
 
 # Hyper Parameters
 learning_rate = 1e-2
-mini_batch_size = 3
-epochs = 500
-num_of_neurons = 10
+mini_batch_size = 1
+epochs = 150
+num_of_neurons = 5
 
 # Initialize wights and biases
 W1 = np.random.normal(mean, std, (num_of_neurons, num_of_pixels))  # (10, 1024)
@@ -181,6 +181,8 @@ for epoch in range(epochs):
         B1 -= learning_rate * gradient_b_1  # (10, 1)
         B2 -= learning_rate * gradient_b_2
 
+    if epoch % 100 == 0:
+        print('average training accuracy = {0}'.format(np.mean(mini_batch_results_training[:, 1])))
     # Store average loss and accuracy for plotting
     total_results_training[epoch, 0] = np.mean(mini_batch_results_training[:, 0])
     total_results_training[epoch, 1] = np.mean(mini_batch_results_training[:, 1])
@@ -246,6 +248,8 @@ for epoch in range(epochs):
         mini_batch_results_validation[mini_batch, 0] = avg_loss
         mini_batch_results_validation[mini_batch, 1] = avg_accuracy
 
+    if epoch % 100 == 0:
+        print('average validation accuracy = {0}'.format(np.mean(mini_batch_results_validation[:, 1])))
     # Store average loss and accuracy for plotting
     total_results_validation[epoch, 0] = np.mean(mini_batch_results_validation[:, 0])
     total_results_validation[epoch, 1] = np.mean(mini_batch_results_validation[:, 1])
