@@ -4,7 +4,9 @@ import os
 from random import shuffle
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import time
 
+start_time = time.time()
 TRAINING_PATH = 'training\\'
 VALIDATION_PATH = 'validation\\'
 
@@ -39,16 +41,14 @@ mean = 0
 std = 0.01
 
 # Hyper Parameters
-learning_rate = 1e-2
+learning_rate = 5e-3
 mini_batch_size = 1
-epochs = 150
-num_of_neurons = 5
+epochs = 400
+num_of_neurons = 10
 
 # Initialize wights and biases
 W1 = np.random.normal(mean, std, (num_of_neurons, num_of_pixels))  # (10, 1024)
 W2 = np.random.normal(mean, std, (1, num_of_neurons))  # (1,10)
-# B1 = np.zeros((num_of_neurons, 1))  # (10,1)
-# B2 = 0
 B1 = np.random.normal(mean, std, (num_of_neurons, 1))  # (10,1)
 B2 = np.random.normal(mean, std)
 
@@ -172,9 +172,6 @@ for epoch in range(epochs):
         a_k_1 = (h_1.mean(axis=1)).reshape(1, -1)
         gradient_w_2 = np.dot(a_k_1, delta_L)  # size:(1,10) as W2 size
 
-        # gradient_w_1 -= learning_rate * 2 * W1
-        # gradient_w_2 -= learning_rate * 2 * W2
-
         # 5. Update weights and biases using calculated gradients and step size
         W1 -= learning_rate * gradient_w_1  # (10, 1024)
         W2 -= learning_rate * gradient_w_2  # (1,10)
@@ -258,6 +255,7 @@ for epoch in range(epochs):
 # Plot of loss and accuracy as a function of epochs
 # ######## PLOTTING TRAINING RESULTS ######### #
 
+print('### Total time: {0}'.format(time.time()-start_time))
 plt.figure()
 plt.subplot(211)
 loss = total_results_training[:, 0]
