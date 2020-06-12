@@ -1,11 +1,14 @@
 import numpy as np
 import glob
+import os
 from random import shuffle
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import time
+import json
 import os
 
-
+start_time = time.time()
 TRAINING_PATH = 'training\\'
 VALIDATION_PATH = 'validation\\'
 
@@ -177,6 +180,8 @@ for epoch in range(epochs):
         B1 -= learning_rate * gradient_b_1  # (10, 1)
         B2 -= learning_rate * gradient_b_2
 
+    if epoch % 100 == 0:
+        print('average training accuracy = {0}'.format(np.mean(mini_batch_results_training[:, 1])))
     # Store average loss and accuracy for plotting
     total_results_training[epoch, 0] = np.mean(mini_batch_results_training[:, 0])
     total_results_training[epoch, 1] = np.mean(mini_batch_results_training[:, 1])
@@ -242,6 +247,8 @@ for epoch in range(epochs):
         mini_batch_results_validation[mini_batch, 0] = avg_loss
         mini_batch_results_validation[mini_batch, 1] = avg_accuracy
 
+    if epoch % 100 == 0:
+        print('average validation accuracy = {0}'.format(np.mean(mini_batch_results_validation[:, 1])))
     # Store average loss and accuracy for plotting
     total_results_validation[epoch, 0] = np.mean(mini_batch_results_validation[:, 0])
     total_results_validation[epoch, 1] = np.mean(mini_batch_results_validation[:, 1])
@@ -250,6 +257,8 @@ for epoch in range(epochs):
 # Plot of loss and accuracy as a function of epochs
 # ######## PLOTTING TRAINING RESULTS ######### #
 
+print('### Total time: {0}'.format(time.time() - start_time))
+"""
 plt.figure()
 plt.subplot(211)
 loss = total_results_training[:, 0]
@@ -270,7 +279,7 @@ axes = plt.gca()
 axes.set_ylim([0, 1])
 plt.show()
 
-# ######## PLOTTING VALIDATION RESULTS ######## #
+######### PLOTTING VALIDATION RESULTS #########
 plt.figure()
 plt.subplot(211)
 loss = total_results_validation[:, 0]
@@ -290,6 +299,47 @@ plt.title('Validation accuracy')
 axes = plt.gca()
 axes.set_ylim([0, 1])
 plt.show()
+"""
 
 
+def make_json(trained_dict, path_to_save):
+    """
+    make json file with trained parameters.
+    W1: numpy arrays of shape (1024, nn_h_dim)
+    W2: numpy arrays of shape (nn_h_dim, 1)
+    b1: numpy arrays of shape (1, nn_h_dim)
+    b2: numpy arrays of shape (1, 1)
+    id1: id1 - int
+    id2: id2 - int
+    activation1: one of only: 'sigmoid', 'tanh', 'ReLU', 'final_act' - str
+    activation2: 'sigmoid' - str
+     number of neirons in hidden layer - int
+    :param nn_h_dim: trained_dict = {'weights': (W1, W2),
+                                    'biases': (b1, b2),
+                                    'nn_hdim': nn_h_dim,
+                                    'activation_1': activation1,
+                                    'activation_2': activation2,
+                                    'IDs': (id1, id2)}
+    """
+    file_path = os.path.join(path_to_save, 'trained_dict_{}_{}.json'.format(
+        trained_dict.get('IDs')[0], trained_dict.get('IDs')[1])
+                             )
+    with open(file_path, 'w') as f:
+        json.dump(trained_dict, f, indent=4)
 
+
+# Preparing dims
+W1_sub = (W1.T).tolist()
+W2_sub = (W2.T).tolist()
+B1_sub = (B1.T).tolist()
+B2_sub = (np.array(B2)).tolist()
+trained_dict = {
+    'weights': (W1_sub, W2_sub),
+    'biases': (B1_sub, B2),
+    'nn_hdim': num_of_neurons,
+    'activation_1': 'ReLU',
+    'activation_2': 'sigmoid',
+    'IDs': (307973693, 200940500)}
+
+path = "C:\\Python\\Medical Images\\Project - medical"
+make_json(trained_dict, path)
